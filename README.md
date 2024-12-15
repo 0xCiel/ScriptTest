@@ -1,1 +1,1 @@
-# ScriptTest
+# educational purpose only
