@@ -2,6 +2,8 @@
 --This is only for practice purpose
 --Pls don't resell it else I will bomb your house
 
+--THIS IS FOR DEEPWOKEN LAYER 2 FLOOR 2
+
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
