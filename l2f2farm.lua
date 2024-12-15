@@ -26,6 +26,38 @@ local chestFolder = workspace:WaitForChild("Thrown")
 local obelisks = workspace:WaitForChild("Layer2Floor2")
 local NPC = workspace:WaitForChild("NPCs")
 
+local function LighthookTeleport()
+    local character = plr.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then
+        return
+    end
+
+    local hrp = character.HumanoidRootPart
+    local targetCFrame = game.workspace.InGameLightHook.CFrame
+
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(5, 1, 5)
+    platform.Anchored = true
+    platform.BrickColor = BrickColor.new("Bright yellow")
+    platform.Material = Enum.Material.Neon
+    platform.Parent = workspace
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+
+            local function UpdatePlatform()
+                platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+            end
+
+            local connection = hrp:GetPropertyChangedSignal("CFrame"):Connect(UpdatePlatform)
+            local duration = (hrp.Position - targetCFrame.Position).Magnitude / 100
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+            local teleportTween = TweenService:Create(hrp, tweenInfo, {CFrame = targetCFrame})
+
+            teleportTween:Play()
+            teleportTween.Completed:Wait()
+            platform:Destroy()
+            connection:Disconnect()
+end
+
 local function ObeliskTeleport()
     local character = plr.Character
     if not character or not character:FindFirstChild("HumanoidRootPart") then
@@ -133,28 +165,35 @@ local function NPCTeleport(Tnpc)
     connection:Disconnect()
 end
 MainStuff:AddButton({
-    Text = 'Auto Chest',  -- The text displayed on the button
-    Func = function()     -- The function that will be called when the button is clicked
+    Text = 'Auto Chest',  
+    Func = function()   
 		ChestTeleport()
     end,
-    Tooltip = 'Tps to chest, Does not auto loot them'  -- Optional tooltip text
+    Tooltip = 'Tps to chest, Does not auto loot them' 
 })
 MainStuff:AddButton({
-    Text = 'Auto Obelisk',  -- The text displayed on the button
-    Func = function()     -- The function that will be called when the button is clicked
+    Text = 'Auto Obelisk', 
+    Func = function()
 		ObeliskTeleport()
     end,
-    Tooltip = 'Tps to obelis, Does not auto activate them'  -- Optional tooltip text
+    Tooltip = 'Tps to obelis, Does not auto enable them' 
+})
+MainStuff:AddButton({
+    Text = 'Teleport to Lighthook',  
+    Func = function()  
+		LighthookTeleport()
+    end,
+    Tooltip = 'tps you to lighthook after beating ethiron' 
 })
 
 for _, bnpc in ipairs(NPC:GetChildren()) do
-    if bnpc:IsA("Model") then -- Check if the child is a model
+    if bnpc:IsA("Model") then 
         NPCStuff:AddButton({
-            Text = bnpc.Name,  -- The text displayed on the button (the name of the NPC)
-            Func = function()  -- The function that will be called when the button is clicked
+            Text = bnpc.Name,  
+            Func = function() 
                 NPCTeleport(bnpc.PrimaryPart.CFrame)
             end,
-            Tooltip = 'Teleport to ' .. bnpc.Name  -- Optional tooltip text
+            Tooltip = 'Teleport to ' .. bnpc.Name 
         })
     end
 end
@@ -177,7 +216,7 @@ local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(
     ));
 end);
 
-Library.KeybindFrame.Visible = true; -- todo: add a function for this
+Library.KeybindFrame.Visible = true; 
 
 Library:OnUnload(function()
     WatermarkConnection:Disconnect()
