@@ -1,3 +1,7 @@
+--This is Made by Ciel, my discord user is 0xciel
+--This is only for practice purpose
+--Pls don't resell it else I will bomb your house
+
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
