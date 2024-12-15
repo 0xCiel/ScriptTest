@@ -26,6 +26,51 @@ local chestFolder = workspace:WaitForChild("Thrown")
 local obelisks = workspace:WaitForChild("Layer2Floor2")
 local NPC = workspace:WaitForChild("NPCs")
 
+local function ObeliskCollision(value)
+    local character = plr.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then
+        return
+    end
+    local hrp = character.HumanoidRootPart
+
+    for _, child in ipairs(obelisks:GetChildren()) do
+        if child:IsA("Model") and child.Name == "Obelisk" then
+            for _, part in ipairs(child:GetChildren()) do
+                if part:IsA("Model") and part.Name == "Pillar" then
+                    for _, bModel in ipairs(part:GetChildren()) do
+                        if bModel:IsA("Model") then
+                            for _, Bobelisk in ipairs(bModel:GetChildren()) do
+                                if Bobelisk:IsA("MeshPart") then
+                                    Bobelisk.CanCollide = value -- Set collision based on the value parameter
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function ChestCollision(value)
+    local character = plr.Character
+    if not character or not character:FindFirstChild("HumanoidRootPart") then
+        return
+    end
+    local hrp = character.HumanoidRootPart
+
+    for _, child in ipairs(chestFolder:GetChildren()) do
+    if child:IsA("Model") and child.PrimaryPart then
+        -- Iterate through the parts in the model
+        for _, part in ipairs(child:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = value
+            end
+        end
+    end
+end
+end
+
 local function LighthookTeleport()
     local character = plr.Character
     if not character or not character:FindFirstChild("HumanoidRootPart") then
@@ -42,6 +87,7 @@ local function LighthookTeleport()
     platform.Material = Enum.Material.Neon
     platform.Parent = workspace
     platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+	platform.Transparency = 1
 
             local function UpdatePlatform()
                 platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
@@ -77,6 +123,7 @@ local function ObeliskTeleport()
             platform.Material = Enum.Material.Neon
             platform.Parent = workspace
             platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+			platform.Transparency = 1
 
             local function UpdatePlatform()
                 platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
@@ -116,6 +163,7 @@ local function ChestTeleport()
             platform.Material = Enum.Material.Neon
             platform.Parent = workspace
             platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+			platform.Transparency = 1
 
             local function UpdatePlatform()
                 platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
@@ -152,6 +200,7 @@ local function NPCTeleport(Tnpc)
     platform.Material = Enum.Material.Neon
     platform.Parent = workspace
     platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
+	platform.Transparency = 1
 	local function UpdatePlatform()
         platform.CFrame = hrp.CFrame * CFrame.new(0, -3, 0)
     end
@@ -168,6 +217,7 @@ MainStuff:AddButton({
     Text = 'Auto Chest',  
     Func = function()   
 		ChestTeleport()
+		ChestCollision(false)
     end,
     Tooltip = 'Tps to chest, Does not auto loot them' 
 })
@@ -175,6 +225,7 @@ MainStuff:AddButton({
     Text = 'Auto Obelisk', 
     Func = function()
 		ObeliskTeleport()
+		ObeliskCollision(false)
     end,
     Tooltip = 'Tps to obelis, Does not auto enable them' 
 })
