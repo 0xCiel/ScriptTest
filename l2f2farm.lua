@@ -233,7 +233,7 @@ MainStuff:AddButton({
 		ObeliskTeleport()
 		ObeliskCollision(false)
     end,
-    Tooltip = 'Tps to obelis, Does not auto enable them' 
+    Tooltip = 'Tps to obelisk, Does not auto enable them' 
 })
 MainStuff:AddButton({
     Text = 'Teleport to Lighthook',  
