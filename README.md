@@ -1,15 +1,13 @@
-# auto Layer 2 Floor 2 [Deepwoken]
+# Layer 2 Script [Deepwoken]
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/0xCiel/ScriptTest/refs/heads/main/Layer2Script.lua"))() 
 ```
 ## Features:
-```lua
-{
-  Auto Obelisk,
-  Auto Chest,
-  NPC Teleport
-}
-```
+-  Auto_Obelisk
+-  Auto_Chest
+-  NPC_Teleport
+-  Ingredient_Teleport
+-  Auto_Floor1
 
 
 ## educational purpose only
